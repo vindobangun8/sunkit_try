@@ -16,7 +16,11 @@ struct ContentView: View {
     @State var isToggle: Bool = false
     @State var isFreeze: Bool  = false
     @State private var degreeOfTilt: Double = 0
-    
+    // MARK:    ii
+//    @State var text1 :String = ""
+//    @State var text2 :String = ""
+//    @State var label1 :Color = Color.white.opacity(0.4)
+//    @State var label2 :Color = Color.white.opacity(0.4)
     let impactFeedback = UIImpactFeedbackGenerator(style: .heavy)
     
     init() {
@@ -28,113 +32,134 @@ struct ContentView: View {
     func indicatorColor(i:Int) -> Color{
         let x = abs(Matahari.locationDataManager.degrees)
         let azimuth = Matahari.sunDirection!.azimuth.degrees
-        let arahMatahari = hitungArahMatahari(utara: x, sunlight: azimuth)
+        let selisih = 360 - azimuth
         
-        
-        if arahMatahari >= -5 && arahMatahari <= 5{ // tengah
-            if i == 7 {
-                return .green
+        if (selisih >= 90){
+            let arahMatahari = hitungArahMatahari(utara: x, sunlight: azimuth)
+            //kalau angka max ga melebihi 180 beda lagi caranya
+            if arahMatahari >= -5 && arahMatahari <= 5{ // tengah
+                if i == 7 {
+                    return .green
+                }
             }
-        }
-        else if  arahMatahari <= -90 && arahMatahari >= -180{ // kiri
-            if i == 14 {
-                return .yellow.opacity(0.2)
+            else if  arahMatahari >= 90  && arahMatahari <= 180 { // posisi lampu kiri jadi harus gerak kekiri biar lampu ke kanan
+                if i == 0 {
+                    return .yellow.opacity(0.2)
+                }
             }
-        }
-        else if  arahMatahari >= 90 { // kanan
-            if i == 0 {
-                return .yellow.opacity(0.2)
+            else if  arahMatahari <= -90 || arahMatahari > 180{ // posisi kanan jadi harus gerak ke kanan biar lampu ke kiri
+                if i == 14 {
+                    return .yellow.opacity(0.2)
+                }
             }
-        }
-//        else if  arahMatahari >= 90 || arahMatahari <= 180 { // kanan
-//            if i == 0 {
-//                return .yellow.opacity(0.2)
-//            }
-//        }
-       
-        else{
+            else{
                 if i == abs(Int((180 - (arahMatahari + 90)) / 12)) {
-                                    if i != Matahari.previousYellowIndex {
-                                        impactFeedback.impactOccurred()
-                                        Matahari.previousYellowIndex = i
-                                    }
-                                    return .yellow
-                                }
+                    if i != Matahari.previousYellowIndex {
+                        impactFeedback.impactOccurred()
+                        Matahari.previousYellowIndex = i
+                    }
+                    return .yellow
+                }
+            }
         }
-//        else {
-//            // rumusan
-//            // x 360 - 180
-//            // if x == 360, f(x) == 0
-//            // if x == 348, f(x) == 1
-//            // if x == 180, f(x_ == 11
-//            if i == Int((360 - x) / 12) {
-//                    if i != Matahari.previousYellowIndex {
-//                        impactFeedback.impactOccurred()
-//                        Matahari.previousYellowIndex = i
-//                    }
-//                    return .yellow
-//                }
-//        }
+        else{
+            let selisihAzimuth = azimuth - selisih
+            let arahMatahari = hitungArahMatahari(utara: x, sunlight: selisihAzimuth)
+            
+            if arahMatahari >= -5 && arahMatahari <= 5{ // tengah
+                if i == 7 {
+                    return .green
+                }
+            }
+            else if  arahMatahari <= -90 && arahMatahari >= -180 { // posisi kanan jadi harus gerak ke kanan biar lampu ke kiri
+                if i == 14 {
+                    return .yellow.opacity(0.2)
+                }
+            }
+            else if   arahMatahari < -180     { // posisi lampu kiri jadi harus gerak kekiri biar lampu ke kanan
+                if i == 0 {
+                    return .yellow.opacity(0.2)
+                }
+            }
+            else{
+                if i == abs(Int((180 - (arahMatahari + 90)) / 12)) {
+                    if i != Matahari.previousYellowIndex {
+                        impactFeedback.impactOccurred()
+                        Matahari.previousYellowIndex = i
+                    }
+                    return .yellow
+                }
+            }
+        }
         return Color.white.opacity(0.6)
     }
-    
     
     func indicatorText() -> String {
         
         let x = abs(Matahari.locationDataManager.degrees)
         let azimuth = Matahari.sunDirection!.azimuth.degrees
-        let arahMatahari = hitungArahMatahari(utara: x, sunlight: azimuth)
+        let selisih = 360 - azimuth
         
+        var arahMatahari = hitungArahMatahari(utara: x, sunlight: azimuth)
         if arahMatahari >= -5 && arahMatahari <= 5{ // tengah
             return "Lighting is perfect  "
         }
-        else if  arahMatahari >= 100 || arahMatahari <= -180 { // kanan
-            return "No Sun near  "
+        else if (selisih >= 90){
+            
+            if  arahMatahari >= 90  && arahMatahari <= 180 { // kanan
+                return "No Sun near  "
+            }
+            else if  arahMatahari <= -90 || arahMatahari > 180 { // kiri
+                return "No Sun near  "
+            }
         }
-        else if  arahMatahari <= -100 && arahMatahari >= -180{ // kiri
-            return "No Sun near  "
+        else{
+            let selisihAzimuth = azimuth - selisih
+            arahMatahari = hitungArahMatahari(utara: x, sunlight: selisihAzimuth)
+            if  arahMatahari <= -90 && arahMatahari >= -180 { // posisi kanan jadi harus gerak ke kanan biar lampu ke kiri
+                return "No Sun near  "
+                
+            }
+            else if   arahMatahari < -180     { // posisi lampu kiri jadi harus gerak kekiri biar lampu ke kanan
+                return "No Sun near  "
+            }
         }
         
         
         return "Need more light  "
     }
-//    
-//    
-//    func indicatorText() -> String {
-//        
-//        let x = abs(Matahari.locationDataManager.degrees)
-//        let azimuth = Matahari.sunDirection!.azimuth.degrees
-//        
-//        if x > 0 && x < 90 { // kiri
-//                return "No Sun near  "
-//        }
-//        
-//        else if x >= 90 && x < 180 { //kanan
-//                return "No Sun near  "
-//        }
-//        
-//        else if x >= azimuth && x < azimuth + 20 { // tengah
-//                return "Lighting is perfect  "
-//        }
-//        
-//        return "Need more light  "
-//    }
+    
     
     func indicatorText2() -> String {
         
         let x = abs(Matahari.locationDataManager.degrees)
         let azimuth = Matahari.sunDirection!.azimuth.degrees
-        let arahMatahari = hitungArahMatahari(utara: x, sunlight: azimuth)
-        
+        var arahMatahari = hitungArahMatahari(utara: x, sunlight: azimuth)
+        let selisih = 360 - azimuth
         
         if arahMatahari >= -5 && arahMatahari <= 5{ // tengah
             return "Clear for capture"
         }
-        else if  arahMatahari >= 100 || arahMatahari <= -180 { // kanan
-            return "Rotate left"
+        else if (selisih >= 90){
+            
+            if  arahMatahari >= 90  && arahMatahari <= 180 { // kanan
+                return "Rotate left"
+                
+            }
+            else if  arahMatahari <= -90 || arahMatahari > 180 { // kiri
+                return "Rotate right"
+            }
         }
-        else if  arahMatahari <= -100 && arahMatahari >= -180{ // kiri
-            return "Rotate right"
+        else{
+            let selisihAzimuth = azimuth - selisih
+            arahMatahari = hitungArahMatahari(utara: x, sunlight: selisihAzimuth)
+            if  arahMatahari <= -90 && arahMatahari >= -180 { // posisi kanan jadi harus gerak ke kanan biar lampu ke kiri
+                return "Rotate left"
+                
+            }
+            else if   arahMatahari < -180     { // posisi lampu kiri jadi harus gerak kekiri biar lampu ke kanan
+                return "Rotate right"
+            }
         }
         return "Keep rotate to center"
     }
@@ -165,12 +190,13 @@ struct ContentView: View {
         
         return .black.opacity(0.9)
     }
-
- func hitungArahMatahari(utara:Double,sunlight:Double) -> Double{
+    
+    func hitungArahMatahari(utara:Double,sunlight:Double) -> Double{
         return  abs(utara) - sunlight
     }
+    
     func formatter(waktu:Date) -> String {
-//        print(waktu)
+        //        print(waktu)
         let formater = DateFormatter()
         formater.dateFormat = "HH:mm E"
         
@@ -210,7 +236,7 @@ struct ContentView: View {
                         .opacity(isFreeze ? 0.8 : 0)
                 }
                 .padding(16)
-    
+                
                 HStack(spacing: 0) {
                     Text(isFreeze ? "Tap to turn on" : indicatorText())
                     Text(isFreeze ? "" : indicatorText2()).fontWeight(.semibold)
@@ -226,12 +252,20 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                Text("north position : \(Matahari.locationDataManager.degrees )")
-                Text("Arah Matahari : \(hitungArahMatahari(utara: Matahari.locationDataManager.degrees, sunlight: Matahari.sunDirection!.azimuth.degrees))")
-                                   .bold()
-
-                Text("azimuth : \(Matahari.sunDirection!.azimuth.degrees)")
-                                   .bold()
+//                Text("north position : \(Matahari.locationDataManager.degrees )")
+//                Text("Arah Matahari : \(hitungArahMatahari(utara: Matahari.locationDataManager.degrees, sunlight: 210.0))")
+//                
+//                
+//                Text("azimuth : \(320.0)")
+//                    .bold()
+//                Text("selisih : \(360.0 - 320.0)")
+//                    .bold()
+//                Text("selisih : \(360.0 - 320.0)")
+//                    .bold()
+//                Text("shadow : \(360.0 - 320.0)")
+//                    .bold()
+                
+                
                 
                 
             }
@@ -245,7 +279,7 @@ struct ContentView: View {
         
         
     }
-
+    
     
 }
 
