@@ -12,6 +12,7 @@ class matahari : NSObject, ObservableObject {
     @Published var location : CLLocation?
     @Published var timezone : TimeZone?
     @Published var sunDirection : Sun?
+    @Published var previousYellowIndex : Int?
     var locationDataManager : LocationDataManager
     
     override init(){
