@@ -216,6 +216,7 @@ struct ContentView: View {
                             Rectangle()
                                 .frame(height: isFreeze ? 16 : 44)
                                 .cornerRadius(isFreeze ? 24 : 6)
+                            // MARK:    indicator COlor next task ubah jadi state smua baru jalanin fungsi di onappear atau yang lain
                                 .foregroundColor(isFreeze ? Color.white.opacity(0.2) : indicatorColor(i: index))
                         }
                     }
