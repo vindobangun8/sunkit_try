@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9B0CAC802AF359D700BE3FDE /* onRotate+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B0CAC7F2AF359D700BE3FDE /* onRotate+Extension.swift */; };
+		9B1D95CC2AF7C66700F28004 /* CoreMotionVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D95CB2AF7C66700F28004 /* CoreMotionVM.swift */; };
 		9B4260DC2AD3AD6F00E152B8 /* Sunkitt_tryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4260DB2AD3AD6F00E152B8 /* Sunkitt_tryApp.swift */; };
 		9B4260DE2AD3AD6F00E152B8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4260DD2AD3AD6F00E152B8 /* ContentView.swift */; };
 		9B4260E02AD3AD7000E152B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B4260DF2AD3AD7000E152B8 /* Assets.xcassets */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B0CAC7F2AF359D700BE3FDE /* onRotate+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "onRotate+Extension.swift"; sourceTree = "<group>"; };
+		9B1D95CB2AF7C66700F28004 /* CoreMotionVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionVM.swift; sourceTree = "<group>"; };
 		9B4260D82AD3AD6F00E152B8 /* Sunkitt try.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sunkitt try.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B4260DB2AD3AD6F00E152B8 /* Sunkitt_tryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sunkitt_tryApp.swift; sourceTree = "<group>"; };
 		9B4260DD2AD3AD6F00E152B8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -66,6 +70,8 @@
 				9B4260EC2AD3BD0A00E152B8 /* LocationDataManager.swift */,
 				9B4260DF2AD3AD7000E152B8 /* Assets.xcassets */,
 				9B4260E12AD3AD7000E152B8 /* Preview Content */,
+				9B0CAC7F2AF359D700BE3FDE /* onRotate+Extension.swift */,
+				9B1D95CB2AF7C66700F28004 /* CoreMotionVM.swift */,
 			);
 			path = "Sunkitt try";
 			sourceTree = "<group>";
@@ -154,8 +160,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B0CAC802AF359D700BE3FDE /* onRotate+Extension.swift in Sources */,
 				9B4260DE2AD3AD6F00E152B8 /* ContentView.swift in Sources */,
 				9BABA4C52AD659F700631A95 /* testCompass.swift in Sources */,
+				9B1D95CC2AF7C66700F28004 /* CoreMotionVM.swift in Sources */,
 				9B4260EF2AD3F2A200E152B8 /* SunKit.swift in Sources */,
 				9B4260ED2AD3BD0A00E152B8 /* LocationDataManager.swift in Sources */,
 				9B4260DC2AD3AD6F00E152B8 /* Sunkitt_tryApp.swift in Sources */,
@@ -295,6 +303,7 @@
 				DEVELOPMENT_TEAM = 34FZBS7BAW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App Needs to access yourlocation data to tell your location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -325,6 +334,7 @@
 				DEVELOPMENT_TEAM = 34FZBS7BAW;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App Needs to access yourlocation data to tell your location";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
